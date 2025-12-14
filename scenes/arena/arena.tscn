@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=4 uid="uid://bvlrr8rufvubk"]
+[gd_scene load_steps=7 format=4 uid="uid://bvlrr8rufvubk"]
 
 [ext_resource type="TileSet" uid="uid://wq03vmlwtqom" path="res://scenes/arena/tileset.tres" id="1_1qjuf"]
+[ext_resource type="Script" uid="uid://bvuitbhri73n1" path="res://scenes/arena/arena.gd" id="1_5tue2"]
 [ext_resource type="Texture2D" uid="uid://mbxv0ayrsu3d" path="res://assets/sprites/star_particle.png" id="2_8trdl"]
 
 [sub_resource type="Curve" id="Curve_5tue2"]
@@ -26,6 +27,7 @@ scale_curve = SubResource("CurveTexture_aj7ud")
 color = Color(1, 1, 1, 0.5019608)
 
 [node name="Arena" type="Node2D"]
+script = ExtResource("1_5tue2")
 metadata/_edit_lock_ = true
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -37,6 +39,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAYAAAAAAAEAAAAAAAYAAAAAAAIAAAAAAAY
 tile_set = ExtResource("1_1qjuf")
 
 [node name="Props" type="TileMapLayer" parent="Visuals"]
+modulate = Color(1, 1, 1, 0.44705883)
 tile_map_data = PackedByteArray("AAAAAAkAAAAMABMAAAACAAcAAAABABMAAAAFAAIAAAADABMAAAAGAAYAAAAAABIAAAAGAAgAAAAAABIAAAAHAAIAAAAAABMAAAAIAAUAAAABABIAAAAJAAYAAAALABMAAAANAAUAAAAAABMAAAAOAAIAAAALABMAAAAOAAQAAAALABMAAAAQAAUAAAAAABMAAAARAAMAAAANABMAAAASAAIAAAABABMAAAASAAUAAAAJABMAAAASAAkAAAAPABMAAAATAAEAAAAJABMAAAATAAQAAAALABMAAAACAAoAAAAAABIAAAATAAoAAAAFABMAAAACAAIAAAAFABMAAAABAAQAAAAHABMAAAADAAEAAAAOABMAAAALAAMAAAAOABMAAAA=")
 tile_set = ExtResource("1_1qjuf")
 
@@ -61,6 +64,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="Decor" type="TileMapLayer" parent="GameArea"]
+modulate = Color(1, 1, 1, 0.37254903)
 tile_map_data = PackedByteArray("AAAGAAAAAAABABUAAAAEAAYAAAABABYAAAAHAAUAAAAAABUAAAAFAAEAAAAAABYAAAA=")
 tile_set = ExtResource("1_1qjuf")
 
