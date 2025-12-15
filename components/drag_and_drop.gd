@@ -46,7 +46,15 @@ func _start_dragging() -> void:
 func _drop() -> void:
 	_end_dragging()
 	dropped.emit(starting_position)
-	
+
+
+func _input(event: InputEvent) -> void:
+	# 释放时不需要
+	if dragging and event.is_action_pressed("cancel_drag"):
+		_cancel_dragging()
+	elif dragging and event.is_action_released("select"):
+		_drop()
+
 
 func _on_target_input_event(_viewport: Node, event: InputEvent) -> void:
 	if not enabled:
@@ -57,10 +65,8 @@ func _on_target_input_event(_viewport: Node, event: InputEvent) -> void:
 	# 当前已经有其他对象正在被拖动，当前组件不要干扰
 	if not dragging and dragging_object:
 		return
-
-	if dragging and event.is_action_pressed("cancel_drag"):
-		_cancel_dragging()
-	elif not dragging and event.is_action_pressed("select"):
+	
+	# 拖动时需要起点在area2d
+	if not dragging and event.is_action_pressed("select"):
 		_start_dragging()
-	elif dragging and event.is_action_released("select"):
-		_drop()
+	
