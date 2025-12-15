@@ -28,7 +28,10 @@ func _set_stats(value: UnitStats) -> void:
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		drag_and_drop.drag_started.connect(_on_drag_started)
-		drag_and_drop.drag_canceled.connect(_on_drag_canceled) # ??? 多余了吧
+		# ??? 多余了吧
+		# ??? 多余了吧
+		# ??? 多余了吧
+		drag_and_drop.drag_canceled.connect(_on_drag_canceled)
 
 
 func _input(event: InputEvent) -> void:

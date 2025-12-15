@@ -1,6 +1,7 @@
 class_name SellPortal
 extends Area2D
 
+@export var unit_pool: UnitPool
 @export var player_stats: PlayerStats
 
 @onready var outline_highlighter: OutlineHighlighter = $OutlineHighlighter
@@ -17,16 +18,16 @@ func _ready() -> void:
 
 
 func setup_unit(unit: Unit) -> void:
-	# TODO 信号本身不具有参数，但是通过bind进行了扩展!!!
+	# !!!信号本身不具有参数，但是通过bind进行了扩展!!!
+	# !!!信号本身不具有参数，但是通过bind进行了扩展!!!
+	# !!!信号本身不具有参数，但是通过bind进行了扩展!!!
 	unit.drag_and_drop.dropped.connect(_on_unit_dropped.bind(unit).unbind(1))
 	unit.quick_sell_pressed.connect(_sell_unit.bind(unit))
 
 
 func _sell_unit(unit: Unit) -> void:
 	player_stats.gold += unit.stats.get_gold_value()
-	# TODO give items back to item pool
-	# TODO put units back to the pool
-	print(player_stats.gold)
+	unit_pool.add_unit(unit.stats)
 	unit.queue_free()
 
 
@@ -35,7 +36,9 @@ func _on_unit_dropped(unit: Unit) -> void:
 		_sell_unit(unit)
 
 
-# Are you sure?
+# 这样写的问题是，如果其他Area2D的派生类参与了碰撞，会直接报错!!!
+# 这样写的问题是，如果其他Area2D的派生类参与了碰撞，会直接报错!!!
+# 这样写的问题是，如果其他Area2D的派生类参与了碰撞，会直接报错!!!
 func _on_area_entered(unit: Unit) -> void:
 	current_unit = unit
 	outline_highlighter.highlight()

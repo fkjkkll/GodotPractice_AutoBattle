@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_o1dyv")
-gold = 50
+gold = 99
+level = 1
 metadata/_custom_type_script = "uid://dviqp5cfovj1b"

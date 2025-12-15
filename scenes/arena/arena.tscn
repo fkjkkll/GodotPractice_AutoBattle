@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://vus0224etbex" path="res://components/tile_highlighter.gd" id="6_jx0ua"]
 [ext_resource type="Script" uid="uid://dfpu61pdhn4t0" path="res://components/unit_mover.gd" id="8_ii07k"]
 [ext_resource type="PackedScene" uid="uid://ck3424dvtg114" path="res://scenes/sell_portal/sell_portal.tscn" id="10_2ml6w"]
-[ext_resource type="Resource" uid="uid://tpw8d478k4h3" path="res://data/player/player_stats.tres" id="11_vmsrg"]
+[ext_resource type="PackedScene" uid="uid://24db7loyt2uo" path="res://scenes/shop/shop.tscn" id="11_s83md"]
 [ext_resource type="Script" uid="uid://blf3l2ylktyxc" path="res://components/unit_spawner.gd" id="11_xgbxb"]
 
 [sub_resource type="Curve" id="Curve_5tue2"]
@@ -129,4 +129,8 @@ game_area = NodePath("../GameArea")
 
 [node name="SellPortal" parent="." instance=ExtResource("10_2ml6w")]
 position = Vector2(64, 288)
-player_stats = ExtResource("11_vmsrg")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Shop" parent="UI" instance=ExtResource("11_s83md")]
+unique_name_in_owner = true
