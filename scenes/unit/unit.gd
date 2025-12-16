@@ -6,7 +6,7 @@ signal quick_sell_pressed
 
 @export var stats: UnitStats : set = _set_stats
 
-@onready var skin: Sprite2D = %Skin
+@onready var skin: PackedSprite2D = %Skin
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var mana_bar: ProgressBar = $ManaBar
 @onready var tier_icon: TierIcon = $TierIcon
@@ -28,17 +28,15 @@ func _set_stats(value: UnitStats) -> void:
 	if not Engine.is_editor_hint():
 		stats = value.duplicate()
 	
-	skin.region_rect.position = Vector2(stats.skin_coordinates) * Arena.CELL_SIZE
+	skin.coordinates = stats.skin_coordinates
 	tier_icon.stats = stats
 
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		drag_and_drop.drag_started.connect(_on_drag_started)
-		# ??? 多余了吧
-		# ??? 多余了吧
-		# ??? 多余了吧
-		drag_and_drop.drag_canceled.connect(_on_drag_canceled)
+		drag_and_drop.dropped.connect(_on_dropped.unbind(1))
+		drag_and_drop.drag_canceled.connect(_on_drag_canceled.unbind(1))
 
 
 func _input(event: InputEvent) -> void:
@@ -63,10 +61,13 @@ func _on_drag_started() -> void:
 	velocity_based_rotation.enabled = true
 
 
-func _on_drag_canceled(starting_pos: Vector2) -> void:
-	reset_after_dragging(starting_pos)
+func _on_dropped() -> void:
+	velocity_based_rotation.enabled = false
+
+
+func _on_drag_canceled() -> void:
+	velocity_based_rotation.enabled = false
 
 
 func reset_after_dragging(starting_pos: Vector2) -> void:
-	velocity_based_rotation.enabled = false
 	global_position = starting_pos

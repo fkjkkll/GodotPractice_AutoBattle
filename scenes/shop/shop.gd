@@ -3,12 +3,11 @@ extends Control
 
 signal unit_bought(unit: UnitStats)
 
-const UNIT_CARD = preload("uid://b25ktia50g52d")
-
 @export var unit_pool: UnitPool
 @export var player_stats: PlayerStats
 
 @onready var shop_cards: VBoxContainer = %ShopCards
+@onready var scene_spawner: SceneSpawner = $SceneSpawner
 
 
 func _ready() -> void:
@@ -21,10 +20,9 @@ func _ready() -> void:
 func _roll_units() -> void:
 	for i in 5:
 		var rarity := player_stats.get_random_rarity_for_level()
-		var new_card: UnitCard = UNIT_CARD.instantiate()
+		var new_card: UnitCard = scene_spawner.spawn_scene(shop_cards)
 		new_card.unit_stats = unit_pool.get_random_unit_by_rarity(rarity)
 		new_card.unit_bought.connect(_on_unit_bought)
-		shop_cards.add_child(new_card)
 
 
 func _put_back_remaining_to_pool() -> void:

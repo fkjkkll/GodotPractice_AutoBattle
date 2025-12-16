@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 func _end_dragging() -> void:
 	dragging = false
 	target.remove_from_group("dragging")
-	target.z_index = 0
+	target.z_index = pre_z_index
 
 
 func _cancel_dragging() -> void:
@@ -34,10 +34,12 @@ func _cancel_dragging() -> void:
 	drag_canceled.emit(starting_position)
 
 
+var pre_z_index := 0
 func _start_dragging() -> void:
 	dragging = true
 	starting_position = target.global_position
 	target.add_to_group("dragging")
+	pre_z_index = target.z_index
 	target.z_index = 99
 	offset = target.global_position - target.get_global_mouse_position()
 	drag_started.emit()

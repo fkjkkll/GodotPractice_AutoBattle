@@ -1,21 +1,24 @@
-[gd_scene load_steps=21 format=4 uid="uid://bvlrr8rufvubk"]
+[gd_scene load_steps=24 format=4 uid="uid://bvlrr8rufvubk"]
 
 [ext_resource type="TileSet" uid="uid://wq03vmlwtqom" path="res://scenes/arena/tileset.tres" id="1_1qjuf"]
 [ext_resource type="Script" uid="uid://bvuitbhri73n1" path="res://scenes/arena/arena.gd" id="1_5tue2"]
 [ext_resource type="Texture2D" uid="uid://mbxv0ayrsu3d" path="res://assets/sprites/star_particle.png" id="2_8trdl"]
 [ext_resource type="AudioStream" uid="uid://dwse76yhsgxvm" path="res://assets/music/alexander_ehlers_twists.ogg" id="2_rhjlh"]
-[ext_resource type="Script" uid="uid://bl4kx2x6mmls8" path="res://components/unit_grid.gd" id="4_aj7ud"]
-[ext_resource type="Script" uid="uid://b1dr4lisg2vsj" path="res://components/play_area.gd" id="4_asdgj"]
+[ext_resource type="Script" uid="uid://bl4kx2x6mmls8" path="res://custom_nodes/unit_grid.gd" id="4_aj7ud"]
+[ext_resource type="Script" uid="uid://b1dr4lisg2vsj" path="res://custom_nodes/play_area.gd" id="4_asdgj"]
 [ext_resource type="Script" uid="uid://vus0224etbex" path="res://components/tile_highlighter.gd" id="6_jx0ua"]
-[ext_resource type="Script" uid="uid://dfpu61pdhn4t0" path="res://components/unit_mover.gd" id="8_ii07k"]
+[ext_resource type="Script" uid="uid://dfpu61pdhn4t0" path="res://custom_nodes/unit_mover.gd" id="8_ii07k"]
 [ext_resource type="AudioStream" uid="uid://xgrsj3clmat0" path="res://assets/sfx/unit_place.ogg" id="9_t3vx8"]
 [ext_resource type="PackedScene" uid="uid://ck3424dvtg114" path="res://scenes/sell_portal/sell_portal.tscn" id="10_2ml6w"]
-[ext_resource type="Script" uid="uid://bee3j2wkkkcgx" path="res://components/unit_combiner.gd" id="10_xgbxb"]
+[ext_resource type="Resource" uid="uid://1666dlapi4ku" path="res://data/game_state/game_state.tres" id="10_wqbss"]
+[ext_resource type="Script" uid="uid://bee3j2wkkkcgx" path="res://custom_nodes/unit_combiner.gd" id="10_xgbxb"]
 [ext_resource type="PackedScene" uid="uid://24db7loyt2uo" path="res://scenes/shop/shop.tscn" id="11_s83md"]
 [ext_resource type="AudioStream" uid="uid://dubwbrp3e8hg3" path="res://assets/sfx/combine.ogg" id="11_w4nra"]
-[ext_resource type="Script" uid="uid://blf3l2ylktyxc" path="res://components/unit_spawner.gd" id="11_xgbxb"]
+[ext_resource type="Script" uid="uid://blf3l2ylktyxc" path="res://custom_nodes/unit_spawner.gd" id="11_xgbxb"]
+[ext_resource type="Script" uid="uid://c4s8b4h15nn07" path="res://components/scene_spawner.gd" id="12_8kk48"]
 [ext_resource type="PackedScene" uid="uid://caih1rlin42fm" path="res://scenes/team_size_ui/team_size_ui.tscn" id="12_vmsrg"]
 [ext_resource type="Resource" uid="uid://tpw8d478k4h3" path="res://data/player/player_stats.tres" id="13_s83md"]
+[ext_resource type="PackedScene" uid="uid://huxmjlt1den" path="res://scenes/unit/unit.tscn" id="13_wqbss"]
 [ext_resource type="PackedScene" uid="uid://b7prcxjymuo28" path="res://scenes/traits/traits.tscn" id="14_fv88w"]
 
 [sub_resource type="Curve" id="Curve_5tue2"]
@@ -90,6 +93,7 @@ tile_set = ExtResource("1_1qjuf")
 tile_set = ExtResource("1_1qjuf")
 
 [node name="ArenaUnitGrid" type="Node2D" parent="GameArea"]
+y_sort_enabled = true
 script = ExtResource("4_aj7ud")
 size = Vector2i(4, 7)
 
@@ -132,12 +136,19 @@ position = Vector2(64, 288)
 [node name="UnitMover" type="Node" parent="." node_paths=PackedStringArray("play_areas")]
 script = ExtResource("8_ii07k")
 play_areas = [NodePath("../GameArea"), NodePath("../Bench")]
+game_state = ExtResource("10_wqbss")
 unit_place_sound = ExtResource("9_t3vx8")
 
 [node name="UnitSpawner" type="Node" parent="." node_paths=PackedStringArray("bench", "game_area")]
 script = ExtResource("11_xgbxb")
 bench = NodePath("../Bench")
 game_area = NodePath("../GameArea")
+game_state = ExtResource("10_wqbss")
+
+[node name="SceneSpawner" type="Node" parent="UnitSpawner"]
+script = ExtResource("12_8kk48")
+scene = ExtResource("13_wqbss")
+metadata/_custom_type_script = "uid://c4s8b4h15nn07"
 
 [node name="UnitCombiner" type="Node" parent="." node_paths=PackedStringArray("buffer_timer")]
 script = ExtResource("10_xgbxb")
