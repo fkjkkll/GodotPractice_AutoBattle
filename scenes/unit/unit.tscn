@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://huxmjlt1den"]
+[gd_scene load_steps=15 format=3 uid="uid://huxmjlt1den"]
 
 [ext_resource type="Texture2D" uid="uid://cx1ivjobggp8n" path="res://assets/sprites/rogues.png" id="1_fmv3f"]
 [ext_resource type="Script" uid="uid://bwj2xlqn8p63r" path="res://scenes/unit/unit.gd" id="1_fvc8g"]
@@ -6,7 +6,9 @@
 [ext_resource type="Material" uid="uid://bb8m5fhpi4wqn" path="res://assets/shaders/2d_outline_shader.tres" id="3_3po7s"]
 [ext_resource type="Script" uid="uid://ckysvesca0v06" path="res://components/drag_and_drop.gd" id="4_bhlit"]
 [ext_resource type="Script" uid="uid://d3qn0y8w8dur0" path="res://components/velocity_based_rotation.gd" id="5_vgvef"]
+[ext_resource type="PackedScene" uid="uid://4yfchakx2no2" path="res://scenes/iter_icon/tier_icon.tscn" id="5_w7udy"]
 [ext_resource type="Script" uid="uid://obgt1sotltcc" path="res://components/outline_highlighter.gd" id="7_0wuuu"]
+[ext_resource type="Script" uid="uid://c1mumctf5pbr" path="res://components/unit_animations.gd" id="9_vqlpx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmv3f"]
 size = Vector2(36, 36)
@@ -73,18 +75,28 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_bhlit")
 value = 50.0
 show_percentage = false
 
+[node name="TierIcon" parent="." instance=ExtResource("5_w7udy")]
+offset_top = -10.0
+offset_bottom = 0.0
+
 [node name="DragAndDrop" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("4_bhlit")
 target = NodePath("..")
 
 [node name="VelocityBasedRotation" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("5_vgvef")
+enabled = false
 target = NodePath("../Visuals/Skin")
 
 [node name="OutlineHighlighter" type="Node" parent="." node_paths=PackedStringArray("visuals")]
 script = ExtResource("7_0wuuu")
 visuals = NodePath("../Visuals")
 outline_thickness = 2
+
+[node name="UnitAnimations" type="Node" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("9_vqlpx")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://c1mumctf5pbr"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ba6top5w0p166"]
+[gd_scene load_steps=11 format=3 uid="uid://ba6top5w0p166"]
 
 [ext_resource type="StyleBox" uid="uid://c3ias4kwkl52j" path="res://assets/theme/shop_button_normal.tres" id="1_3rb6o"]
 [ext_resource type="StyleBox" uid="uid://mgcn15cjl08u" path="res://assets/theme/shop_button_pressed.tres" id="2_w6h38"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ddltmt86qteg1" path="res://scenes/xp_button/xp_button.gd" id="4_w6h38"]
 [ext_resource type="Texture2D" uid="uid://c4awhqfup7o2k" path="res://assets/sprites/gold.png" id="5_e0e37"]
 [ext_resource type="Resource" uid="uid://tpw8d478k4h3" path="res://data/player/player_stats.tres" id="5_u4y6s"]
+[ext_resource type="AudioStream" uid="uid://q4db8jmbfdk7" path="res://assets/sfx/xp_buy.ogg" id="6_rk4mc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ayovo"]
 
@@ -26,6 +27,7 @@ theme_override_styles/hover = ExtResource("3_u4y6s")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ayovo")
 script = ExtResource("4_w6h38")
 player_stats = ExtResource("5_u4y6s")
+xp_sound = ExtResource("6_rk4mc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
