@@ -13,6 +13,9 @@ const QUARTER_CELL_SIZE := Vector2(8, 8)
 @onready var unit_combiner: UnitCombiner = $UnitCombiner
 @onready var shop: Shop = %Shop
 
+@onready var game_area: PlayArea = $GameArea
+@onready var battle_grid: UnitGrid = $GameArea/BattleUnitGrid
+
 
 func _ready() -> void:
 	unit_spawner.unit_spawned.connect(unit_mover.setup_unit)
@@ -20,3 +23,4 @@ func _ready() -> void:
 	unit_spawner.unit_spawned.connect(unit_combiner.queue_unit_combination_update.unbind(1))
 	shop.unit_bought.connect(unit_spawner.spawn_unit)
 	MusicPlayer.play(arena_music_stream)
+	UnitNavigation.initialize(battle_grid, game_area)

@@ -55,7 +55,17 @@ func get_all_units() -> Array[Unit]:
 	return unit_array
 
 
-func _on_unit_tree_existed(unit: Unit, tile: Vector2i) -> void:
+func get_all_occupied_tiles() -> Array[Vector2i]:
+	var tile_array: Array[Vector2i] = []
+	
+	for tile: Vector2i in units.keys():
+		if units[tile]:
+			tile_array.append(tile)
+	
+	return tile_array
+
+
+func _on_unit_tree_existed(unit: Node, tile: Vector2i) -> void:
 	# NOTE: GODOT中reparent会先将结点拿开（离开场景树）然后再设置新父节点
 	# 导致会也会触发这个信号，因此需要额外判断
 	if unit.is_queued_for_deletion():

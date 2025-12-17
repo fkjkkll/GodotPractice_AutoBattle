@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitStats" load_steps=3 format=3 uid="uid://mvukmqgxkmti"]
+
+[ext_resource type="Script" uid="uid://bsg0vjhionfsu" path="res://data/units/unit_stats.gd" id="1_bncb8"]
+[ext_resource type="Script" uid="uid://cccm11so6ss3q" path="res://data/traits/trait.gd" id="2_m70pa"]
+
+[resource]
+script = ExtResource("1_bncb8")
+name = "Zombie"
+team = 1
+max_health = Array[int]([18, 22, 25])
+attack_damage = Array[int]([2, 4, 6])
+attack_speed = 0.7
+attack_range = 1
+metadata/_custom_type_script = "uid://bsg0vjhionfsu"
