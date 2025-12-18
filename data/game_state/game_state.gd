@@ -7,3 +7,7 @@ enum Phase { PREPARATION, BATTLE }
 	set(value):
 		current_phase = value
 		changed.emit()
+
+
+func is_battling() -> bool:
+	return current_phase == Phase.BATTLE

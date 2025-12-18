@@ -22,8 +22,10 @@ func _set_enabled(value: bool) -> void:
 	
 	if enabled:
 		_start_chasing()
+		actor.stats.mana_bar_filled.connect(_on_mana_bar_filled)
 	else:
 		fsm.change_state(null)
+		actor.stats.mana_bar_filled.disconnect(_on_mana_bar_filled)
 
 
 func _physics_process(delta: float) -> void:
@@ -57,4 +59,12 @@ func _on_chase_state_stuck() -> void:
 
 func _on_chase_state_target_reached(target: BattleUnit) -> void:
 	var aa_state := AutoAttackState.new(actor, target)
+	aa_state.target_died.connect(_start_chasing, CONNECT_ONE_SHOT)
+	aa_state.target_left_range.connect(_start_chasing, CONNECT_ONE_SHOT)
 	fsm.change_state(aa_state)
+
+
+func _on_mana_bar_filled() -> void:
+	var cast_state := CastState.new(actor)
+	cast_state.ability_cast_finished.connect(_start_chasing, CONNECT_ONE_SHOT)
+	fsm.change_state(cast_state)

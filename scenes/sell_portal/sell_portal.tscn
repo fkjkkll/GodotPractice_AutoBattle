@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ck3424dvtg114"]
+[gd_scene load_steps=12 format=3 uid="uid://ck3424dvtg114"]
 
 [ext_resource type="Material" uid="uid://bb8m5fhpi4wqn" path="res://assets/shaders/2d_outline_shader.tres" id="1_g4w48"]
 [ext_resource type="Script" uid="uid://d3otynjtr40cy" path="res://scenes/sell_portal/sell_portal.gd" id="1_q37ab"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://obgt1sotltcc" path="res://components/outline_highlighter.gd" id="3_q37ab"]
 [ext_resource type="AudioStream" uid="uid://p1b7rsqtf0cc" path="res://assets/sfx/sell.ogg" id="4_6kxgn"]
 [ext_resource type="Texture2D" uid="uid://c4awhqfup7o2k" path="res://assets/sprites/gold.png" id="4_se251"]
+[ext_resource type="Script" uid="uid://bujn0ibgs2u7d" path="res://custom_nodes/flip_sprite.gd" id="9_o1cao"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlex"]
 size = Vector2(32, 32)
@@ -73,6 +74,11 @@ layout_mode = 2
 texture = ExtResource("4_se251")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="FlipSprite" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("9_o1cao")
+sprite = NodePath("../Visuals/Sprite2D")
+metadata/_custom_type_script = "uid://bujn0ibgs2u7d"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

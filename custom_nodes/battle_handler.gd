@@ -56,12 +56,19 @@ func _prepare_fight() -> void:
 		new_unit.stats = ZOMBIE
 		new_unit.stats.team = UnitStats.Team.ENEMY
 		_setup_battle_unit(unit_coord, new_unit)
-
+	
+	UnitNavigation.update_occupied_tiles()
+	var battle_units := get_tree().get_nodes_in_group("player_units") + \
+						get_tree().get_nodes_in_group("enemy_units")
+	battle_units.shuffle()
+	for battle_unit: BattleUnit in battle_units:
+		battle_unit.unit_ai.enabled = true
+		
 
 func _on_battle_unit_died() -> void:
 	# We already concluded the battle!
 	# or we are quitting the game
-	if not get_tree() or game_state.current_phase == GameState.Phase.PREPARATION:
+	if not get_tree() or not game_state.is_battling():
 		return
 	
 	if get_tree().get_node_count_in_group("enemy_units") == 0:

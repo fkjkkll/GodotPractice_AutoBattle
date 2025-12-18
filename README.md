@@ -10,6 +10,7 @@ A singleplayer autobattler practice project made in Godot 4.
 - `RandomNumberGenerator`是专门用于生成伪随机的类，支持种子和状态，支持加权随机生成。
 - 信号可以通过bind和unbind自由捆绑回调方，例如`unit.drag_and_drop.dropped.connect(_on_unit_dropped.bind(unit).unbind(1))`，此例中，先丢弃信号传来的最后一个参数，随后绑定了一个回调方需要的额外参数
 - Container通过手动设置size后会缓存这个大小，当内部元素hide的时候也不会收缩，如果你需要它收缩，应确保没有设置过，或者每次调整子节点隐藏时主动设置container大小
+-  _enter_tree和_ready顺序是反的，前者是父节点先调用，后者是最后一个子节点先调用（递归）
 
 # Credits
 - [from repository](https://github.com/guladam/godot_autobattler_course/tree/main)

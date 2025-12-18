@@ -8,6 +8,7 @@ extends Area2D
 @onready var outline_highlighter: OutlineHighlighter = $OutlineHighlighter
 @onready var gold: HBoxContainer = %Gold
 @onready var gold_label: Label = %GoldLabel
+@onready var flip_sprite: FlipSprite = $FlipSprite
 
 var current_unit: Unit
 
@@ -36,6 +37,11 @@ func _sell_unit(unit: Unit) -> void:
 func _on_unit_dropped(unit: Unit) -> void:
 	if unit and unit == current_unit:
 		_sell_unit(unit)
+
+
+func _process(_delta: float) -> void:
+	if not current_unit: return
+	flip_sprite.flip_sprite_towards(current_unit.global_position)
 
 
 # 这样写的问题是，如果其他Area2D的派生类参与了碰撞，会直接报错!!!
