@@ -121,5 +121,9 @@ func _set_mana(value: int) -> void:
 		mana_bar_filled.emit()
 
 
+func ability_available() -> bool:
+	return mana >= max_mana and max_mana > 0
+
+
 func _to_string() -> String:
 	return name

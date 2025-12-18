@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://s2o7bw78qcp0"]
+[gd_scene load_steps=3 format=3 uid="uid://s2o7bw78qcp0"]
 
 [ext_resource type="Script" uid="uid://gm3wvw1l64rd" path="res://scenes/_abilities/hail_of_arrows.gd" id="1_7leyw"]
+[ext_resource type="AudioStream" uid="uid://b07onq65vyjla" path="res://assets/sfx/robin_spell.wav" id="2_l8vw0"]
 
 [node name="HailOfArrows" type="Node2D"]
 script = ExtResource("1_7leyw")
 extra_shots_per_tier = Array[int]([1, 2, 3])
+sound = ExtResource("2_l8vw0")
 metadata/_custom_type_script = "uid://bg5yd56ymwsbs"

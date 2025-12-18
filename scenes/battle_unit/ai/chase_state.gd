@@ -1,19 +1,17 @@
 class_name ChaseState
 extends State
 
-signal target_reached(target: BattleUnit)
-signal stuck
-
 var actor_unit: BattleUnit
 var tween: Tween
 
 func enter() -> void:
 	actor_unit = actor as BattleUnit
 	if _has_target_in_range():
-		_end_chase()
+		_find_target()
 	else:
 		actor_unit.target_finder.find_target()
 		actor_unit.target_finder.targets_in_range_changed.connect(_on_targets_in_range_changed)
+		chase()
 
 
 func exit() -> void:
@@ -34,29 +32,32 @@ func chase() -> void:
 	if new_pos == Vector2(-1, -1):
 		# we might already have a new target if a unit died or something?
 		if _has_target_in_range():
-			_end_chase()
+			_find_target()
 		else:
 			actor_unit.animation_player.play("RESET")
-			stuck.emit()
+			change_state.emit(StateType.STUCK)
 		return
 	
 	actor_unit.flip_sprite.flip_sprite_towards(new_pos)
 	tween = actor_unit.create_tween()
 	tween.tween_callback(actor_unit.animation_player.play.bind("move"))
 	tween.tween_property(actor_unit, "global_position", new_pos, UnitStats.MOVE_ONE_TILE_SPEED)
-	tween.finished.connect(
-		func():
-			tween.kill()
-			
-			if _has_target_in_range():
-				_end_chase()
-			else:
-				chase()
-	)
+	tween.finished.connect(_on_chase_step_end)
 
 
-func _end_chase() -> void:
-	target_reached.emit.call_deferred(actor_unit.target_finder.targets_in_range[0])
+func _on_chase_step_end():
+	tween.kill()
+	if _has_target_in_range():
+		_find_target()
+	else:
+		chase()
+
+
+func _find_target() -> void:
+	if actor_unit.stats.ability_available():
+		change_state.emit(StateType.CAST)
+	else:
+		change_state.emit(StateType.AUTO_ATTACK) # 需要deferred?
 
 
 func _has_target_in_range() -> bool:
@@ -65,4 +66,4 @@ func _has_target_in_range() -> bool:
 
 func _on_targets_in_range_changed() -> void:
 	if not tween and _has_target_in_range():
-		_end_chase()
+		_find_target()

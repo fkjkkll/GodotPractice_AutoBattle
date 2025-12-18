@@ -143,6 +143,7 @@ metadata/_custom_type_script = "uid://vus0224etbex"
 position = Vector2(64, 288)
 
 [node name="UnitNavigationDebug" type="Node2D" parent="." node_paths=PackedStringArray("game_area")]
+visible = false
 position = Vector2(160, 32)
 script = ExtResource("9_l0cts")
 color = Color(0.8745098, 0, 0, 0.4862745)

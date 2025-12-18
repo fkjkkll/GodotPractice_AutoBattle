@@ -2,11 +2,27 @@ class_name BattleHandler
 extends Node
 
 const ZOMBIE_TEST_POSITIONS := [
-	Vector2i(8, 1),
-	Vector2i(7, 4),
-	Vector2i(8, 3),
+	Vector2i(5, 1),
+	Vector2i(5, 3),
+	Vector2i(5, 5),
+	
+	Vector2i(6, 0),
+	Vector2i(6, 2),
+	Vector2i(6, 4),
+	Vector2i(6, 6),
+	
+	Vector2i(7, 1),
+	Vector2i(7, 3),
+	Vector2i(7, 5),
+	
+	Vector2i(8, 0),
+	Vector2i(8, 2),
+	Vector2i(8, 4),
+	Vector2i(8, 6),
+	
+	Vector2i(9, 1),
+	Vector2i(9, 3),
 	Vector2i(9, 5),
-	Vector2i(9, 6)
 ]
 const ZOMBIE := preload("res://data/enemies/zombie.tres")
 
@@ -36,6 +52,11 @@ func _setup_battle_unit(unit_coord: Vector2i, new_unit: BattleUnit) -> void:
 func _clean_up_fight() -> void:
 	get_tree().call_group("player_units", "queue_free")
 	get_tree().call_group("enemy_units", "queue_free")
+	# ability技能创建的可能存在的残留物
+	# 比如刚创建，对局就结束了，状态没有走exit销毁
+	# 但是为什么，不确保执行exit呢？我觉得这样处理很不好
+	# 应该在unit_ai exit_tree的时候，手动调用当前状态exit
+	get_tree().call_group("unit_abilities", "queue_free")
 	get_tree().call_group("units", "show")
 
 

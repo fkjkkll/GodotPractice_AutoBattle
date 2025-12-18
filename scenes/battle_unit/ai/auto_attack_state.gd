@@ -1,22 +1,18 @@
 class_name AutoAttackState
 extends State
 
-signal target_left_range
-signal target_died
-
 var actor_unit: BattleUnit
 var target: BattleUnit
-
-
-func _init(new_actor: Node, current_target: BattleUnit) -> void:
-	actor = new_actor
-	target = current_target
+var running := false
 
 
 func enter() -> void:
+	running = true
 	actor_unit = actor as BattleUnit
+	target = actor_unit.target_finder.targets_in_range[0]
 	actor_unit.detect_range.area_exited.connect(_on_detect_range_exited)
 	actor_unit.attack_timer.timeout.connect(_attack)
+	actor_unit.stats.mana_bar_filled.connect(_ability_ready)
 	_setup_attack_timer()
 	actor_unit.animation_player.play("RESET")
 
@@ -25,6 +21,12 @@ func exit() -> void:
 	actor_unit.detect_range.area_exited.disconnect(_on_detect_range_exited)
 	actor_unit.attack_timer.stop()
 	actor_unit.attack_timer.timeout.disconnect(_attack)
+	actor_unit.stats.mana_bar_filled.disconnect(_ability_ready)
+	running = false
+
+
+func _ability_ready() -> void:
+	change_state.emit(StateType.CAST)
 
 
 func _setup_attack_timer() -> void:
@@ -53,14 +55,13 @@ func _attack() -> void:
 
 
 func _on_attack_hit() -> void:
-	if not target:
-		return
-	
+	if not target: return
 	actor_unit.stats.mana += UnitStats.MANA_PER_ATTACK
-	if target.stats.health <= 0:
-		target_died.emit()
+	
+	if running and target.stats.health <= 0:
+		change_state.emit(StateType.CHASE)
 
 
 func _on_detect_range_exited(area: Area2D) -> void:
 	if area is BattleUnit and area == target:
-		target_left_range.emit()
+		change_state.emit(StateType.CHASE)
